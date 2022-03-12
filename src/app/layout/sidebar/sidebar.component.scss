@@ -1,0 +1,22 @@
+#sidebar {
+  max-width: 300px;
+}
+
+.listitem {
+  display: block;
+}
+
+.sidebar-link {
+  background-color: #6f86d6;
+  border-radius: 10px;
+  width: 100px;
+  padding: 8px;
+
+  text-decoration: none;
+  display: block;
+  color: #fff;
+  &:hover {
+    transform: translateX(2px);
+    color: #ff7eb3;
+  }
+}

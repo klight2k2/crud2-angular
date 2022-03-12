@@ -1,0 +1,90 @@
+<div class="add-wrapper">
+  <mat-card>
+    <form [formGroup]="addUserForm" (submit)="createUser()">
+      <p>
+        <mat-form-field appearance="outline" class="add-input">
+          <mat-label>Username</mat-label>
+          <input
+            formControlName="username"
+            matInput
+            placeholder="Enter username..."
+          />
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error
+            *ngIf="addUserForm.controls['username'].hasError('required')"
+          >
+            username is required
+          </mat-error>
+          <mat-error
+            *ngIf="addUserForm.controls['username'].hasError('minlength')"
+          >
+            username too short
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" class="add-input">
+          <mat-label>password</mat-label>
+          <input
+            formControlName="password"
+            matInput
+            required
+            placeholder="Enter password..."
+          />
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error
+            *ngIf="addUserForm.controls['password'].hasError('required')"
+          >
+            password is required
+          </mat-error>
+          <mat-error
+            *ngIf="addUserForm.controls['password'].hasError('minlength')"
+          >
+            password too short
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" class="add-input">
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            placeholder="Enter email..."
+            type="email"
+          />
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error *ngIf="addUserForm.controls['email'].hasError('email')">
+            Email is invalid
+          </mat-error>
+          <mat-error *ngIf="addUserForm.controls['email'].hasError('required')">
+            email is required
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" class="add-input">
+          <mat-label>Phone</mat-label>
+          <input
+            formControlName="phone"
+            matInput
+            placeholder="Enter phone..."
+            type="tel"
+          />
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          <mat-error *ngIf="addUserForm.controls['phone'].hasError('required')">
+            phone is required
+          </mat-error>
+          <mat-error
+            *ngIf="addUserForm.controls['phone'].hasError('maxlength')"
+          >
+            phone max length is 11
+          </mat-error>
+        </mat-form-field>
+      </p>
+      <button mat-raised-button color="primary" [disabled]="!addUserForm.valid">
+        Create
+      </button>
+    </form>
+  </mat-card>
+</div>

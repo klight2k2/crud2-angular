@@ -1,0 +1,34 @@
+<div class="loginContainer">
+  <form class="loginForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Enter your email</mat-label>
+      <input
+        matInput
+        placeholder="pat@example.com"
+        required
+        [formControl]="email"
+      />
+      <mat-error *ngIf="email.invalid">{{ getErrorMessageEmail() }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <input
+        matInput
+        placeholder="password"
+        required
+        type="password"
+        [formControl]="password"
+      />
+      <mat-error *ngIf="password.invalid">{{
+        getErrorMessagePass()
+      }}</mat-error>
+    </mat-form-field>
+    <button
+      class="loginButton"
+      [disabled]="email.invalid || password.invalid"
+      (click)="login($event)"
+    >
+      Đăng nhập
+    </button>
+  </form>
+</div>

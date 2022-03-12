@@ -1,0 +1,24 @@
+.main-content {
+  margin-left: 20px;
+}
+
+.username {
+  min-width: 300px;
+}
+
+.action-link {
+  padding: 10px;
+  text-decoration: none;
+  color: #6f86d6;
+  &:hover {
+    color: #da4453;
+  }
+}
+
+table {
+  width: 100%;
+}
+
+.list-wrapper {
+  padding: 20px;
+}

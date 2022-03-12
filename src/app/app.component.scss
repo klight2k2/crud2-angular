@@ -1,0 +1,13 @@
+.container {
+  width: 90%;
+  margin-top: 60px;
+  height: 100%;
+  margin: 10px;
+  // border: 1px solid #555;
+  // margin: 0 auto;
+  // margin-top: 50px;
+}
+
+::ng-deep .header-title {
+  color: red;
+}

@@ -1,0 +1,28 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.header {
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+
+  &-title {
+    font-size: 30px;
+    color: #fff;
+    font-style: italic;
+  }
+}
+
+.buttonLogin {
+  color: #070918;
+  text-decoration: none;
+  background-color: #b3f34a;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  border: 1px solid #333;
+}
+
+.buttonLogin:hover {
+  opacity: 0.8;
+  cursor: pointer;
+}

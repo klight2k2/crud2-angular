@@ -1,0 +1,111 @@
+<div class="edit-container">
+  <h1>Edit</h1>
+  <div>
+    <form
+      [formGroup]="editUserForm"
+      *ngIf="user"
+      (submit)="updateUser($event)"
+      enctype="multipart/form-data"
+    >
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Username</mat-label>
+          <input
+            formControlName="username"
+            matInput
+            placeholder="Enter new username"
+          />
+
+          <mat-error
+            *ngIf="
+              editUserForm.controls['username'].hasError('required') &&
+              editUserForm.controls['username'].errors
+            "
+          >
+            Please enter username
+          </mat-error>
+          <mat-error
+            *ngIf="
+              editUserForm.controls['username'].errors &&
+              editUserForm.controls['username'].hasError('minLength')
+            "
+          >
+            minLength is 6
+          </mat-error>
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            formControlName="email"
+            matInput
+            placeholder="Enter new email"
+          />
+        </mat-form-field>
+        <mat-error
+          *ngIf="
+            editUserForm.controls['email'].hasError('required') &&
+            !editUserForm.controls['email'].hasError('minLength')
+          "
+          >Email iss required
+        </mat-error>
+        <mat-error *ngIf="editUserForm.controls['email'].hasError('email')"
+          >Email is valid
+        </mat-error>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Image URL</mat-label>
+          <input formControlName="image" matInput placeholder="Enter image" />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>Old password</mat-label>
+          <input
+            formControlName="oldPassword"
+            matInput
+            placeholder="Enter old password"
+            type="password"
+          />
+        </mat-form-field>
+        <mat-error
+          *ngIf="editUserForm.controls['oldPassword'].hasError('required')"
+          >password is required
+        </mat-error>
+      </p>
+      <p>
+        <mat-form-field appearance="outline">
+          <mat-label>New password</mat-label>
+          <input
+            formControlName="newPassword"
+            matInput
+            placeholder="Enter new password"
+            type="password"
+          />
+        </mat-form-field>
+        <mat-error
+          *ngIf="editUserForm.controls['newPassword'].hasError('required')"
+          >password is required
+        </mat-error>
+      </p>
+      <p>
+        <input type="file" (change)="onFileSelect($event)" en />
+      </p>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!editUserForm.valid"
+        type="submit"
+      >
+        Update user
+      </button>
+
+      <div *ngIf="imageData">
+        <img [src]="imageData" [alt]="editUserForm.value.username" />
+      </div>
+    </form>
+  </div>
+</div>

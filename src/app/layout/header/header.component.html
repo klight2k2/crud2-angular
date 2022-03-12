@@ -1,0 +1,9 @@
+<mat-toolbar class="header">
+  <span class="header-title">Klight</span>
+  <span class="example-spacer"></span>
+  
+  <button class="buttonLogin" (click)="logout()" *ngIf="isLogined">
+    Logout
+  </button>
+  <a href="/login" class="buttonLogin" *ngIf="!isLogined">Login</a>
+</mat-toolbar>
