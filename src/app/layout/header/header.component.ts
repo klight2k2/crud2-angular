@@ -19,10 +19,10 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.tokenStorage.signOut();
     window.location.reload();
-    this.router.navigateByUrl('/login');
+   
   }
   ngOnInit(): void {
     this.isLogined = this.userService.isLogined();
-    console.log('logined', this.isLogined);
+    console.log('logined header', this.isLogined);
   }
 }

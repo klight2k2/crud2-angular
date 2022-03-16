@@ -65,8 +65,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
     console.log('submit user');
   }
   updateUser(event: Event): void {
-    console.log(this.editUserForm.value);
     event.preventDefault();
+    console.log('update user', this.editUserForm.value.image);
     this.subscription = this.userService
       .updateUser(this.editUserForm.value, this.userId)
       .subscribe({

@@ -7,6 +7,8 @@ import { ListUsersComponent } from './users/list-users/list-users.component';
 import { ViewUserComponent } from './users/view-user/view-user.component';
 import { LoginComponent } from './layout/login/login.component';
 import { AuthGuard } from './auth.guard';
+import { ProileComponent } from './users/proile/proile.component';
+import { RoleguardGuard } from './roleguard.guard';
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
 
@@ -17,7 +19,10 @@ const routes: Routes = [
       { path: 'list', component: ListUsersComponent },
       { path: 'view/:id', component: ViewUserComponent },
       { path: 'delete/:id', component: DeleteUserComponent },
-      { path: 'edit/:id', component: EditUserComponent },
+      { path: 'edit/:id', component: EditUserComponent,
+        canActivate:[RoleguardGuard]
+    },
+      { path: 'profile', component: ProileComponent },
     ],
     canActivate: [AuthGuard],
   },

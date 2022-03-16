@@ -1,8 +1,8 @@
 <div class="card-wrapper">
-  <mat-card *ngIf="user" class="user-detail">
+  <mat-card *ngIf="user$ | async as user" class="user-detail">
     <mat-card-title>{{ user.username }}</mat-card-title>
     <mat-card-content>
-      <img [src]="user.image" class="userAvt" *ngIf="user.image" alt="" />
+      <img [src]=" user.image" class="userAvt" [alt]="user.username" />
       <img src="assets/avt.jpg" class="userAvt" *ngIf="!user.image" alt="" />
       <p *ngIf="user.email">Email:{{ user.email }}</p>
       <p *ngIf="user.phone">Phone:{{ user.phone }}</p>

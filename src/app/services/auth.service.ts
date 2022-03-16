@@ -3,7 +3,10 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 const AUTH_API = 'http://localhost:3000/api/auth/';
 const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' ,
+  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Methods': 'GET',
+  'Access-Control-Allow-Origin': 'http://localhost:3000'}),
 };
 @Injectable({
   providedIn: 'root',

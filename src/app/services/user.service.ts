@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../users/list-users/list-users.component';
 import { TokenStorageService } from './token-storage.service';
-
+const httpOptions = {
+  headers: new HttpHeaders({ 
+  'Access-Control-Allow-Methods': 'GET',
+  'Access-Control-Allow-Origin': 'http://localhost:3000'}),
+};
 @Injectable({
   providedIn: 'root',
 })
@@ -41,9 +45,16 @@ export class UserService {
     console.log('deleteUser', id);
     return this.http.delete(this.baseUrl + 'users/' + id + '/delete');
   }
-  updateUser(userObj: User, id: any) {
+  updateUser(userObj: any, id: any) {
+    console.log('update', userObj);
+    const formdata = new FormData();
+    formdata.append('username', userObj.username);
+    formdata.append('image', userObj.image);
+    formdata.append('email', userObj.email);
+    formdata.append('oldPassword', userObj.oldPassword);
+    formdata.append('newPassword', userObj.newPassword);
     this.token = this.tokenStorage.getToken() || '';
-
-    return this.http.put<User>(this.baseUrl + 'users/' + id, userObj);
+    console.log('formdata ', formdata);
+    return this.http.put<User>(this.baseUrl + 'users/' + id, formdata);
   }
 }

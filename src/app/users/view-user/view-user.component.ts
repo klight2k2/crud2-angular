@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { User } from '../list-users/list-users.component';
 @Component({
@@ -8,9 +8,9 @@ import { User } from '../list-users/list-users.component';
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.scss'],
 })
-export class ViewUserComponent implements OnInit, OnDestroy {
+export class ViewUserComponent implements OnInit {
   userId: string = '';
-  user!: User;
+  user$!: Observable<User>;
   subscription!: Subscription;
   constructor(
     private userService: UserService,
@@ -23,14 +23,6 @@ export class ViewUserComponent implements OnInit, OnDestroy {
         this.userId = data['id'];
       })
       .unsubscribe();
-    this.subscription = this.userService
-      .viewUsers(this.userId)
-      .subscribe((data) => {
-        console.log(data);
-        this.user = data;
-      });
-  }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.user$ = this.userService.viewUsers(this.userId);
   }
 }
