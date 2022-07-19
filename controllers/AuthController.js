@@ -4,23 +4,28 @@ const jwt = require('jsonwebtoken');
 
 class AuthController {
 	async login(req, res) {
+		console.log(req.body);
 		try {
 			const { email, password } = req.body;
+			console.log(email, password);
 
 			if (!(email && password)) {
-				res.status(400).send('All input is required');
+				return res
+					.status(400)
+					.send('All input is required');
 			}
 			const user = await User.findOne({
 				email,
 			});
-			!user && res.status(404).json('user not found');
+			if (!user)
+				return res.status(404).json('user not found');
 
 			const validPassword = await bcrypt.compare(
 				req.body.password,
 				user.password
 			);
-			!validPassword &&
-				res.status(400).json('Wrong password');
+			if (!validPassword)
+				return res.status(400).json('Wrong password');
 			const token = jwt.sign(
 				{ userId: user._id, isAdmin: user.isAdmin },
 				process.env.TOKEN_KEY,
@@ -30,13 +35,14 @@ class AuthController {
 			);
 			user.token = token;
 			await user.save();
-			res.status(200).json({
+			return res.status(200).json({
 				accessToken: token,
 				username: user.username,
 				userId: user._id,
+				isAdmin: user.isAdmin,
 			});
 		} catch (err) {
-			res.status(500).json(err);
+			return res.status(500).json(err);
 		}
 	}
 	async register(req, res) {
@@ -67,10 +73,10 @@ class AuthController {
 			newUser.token = token;
 			// save user and respond
 			const user = await newUser.save();
-			res.status(200).json(user);
+			return res.status(200).json(user);
 		} catch (err) {
-			res.status(500).json('Can not create user');
 			console.log(err);
+			return res.status(500).json('Can not create user');
 		}
 	}
 }

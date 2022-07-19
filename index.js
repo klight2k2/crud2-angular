@@ -1,32 +1,39 @@
+require('dotenv').config();
+
+const path = require('path');
+const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-const helmet = require('helmet');
-const morgan = require('morgan');
-const userRoute = require('./routes/userRoute');
+const cors = require('cors');
+var morgan = require('morgan');
+
 const authRoute = require('./routes/authRoute');
+const userRoute = require('./routes/userRoute');
 const auth = require('./middleware/auth');
-var cors = require('cors');
 const app = express();
-app.use(cors());
-dotenv.config();
 
-mongoose.connect(process.env.MONGO_URL, (req, res) => {
-	console.log('connect to mongodb success!');
-});
+const ports = process.env.PORT || 3000;
 
-app.use(express.json());
-app.use(helmet());
 app.use(morgan('common'));
+mongoose
+	.connect(
+		'mongodb+srv://myapp:hello123@cluster0.mideg.mongodb.net/test?authSource=admin&replicaSet=atlas-3kr2am-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true',
+		{ useNewUrlParser: true, useUnifiedTopology: true }
+	)
+	.then(() => {
+		app.listen(
+			ports,
+			console.log(`Server is running on port ${ports}`)
+		);
+	})
+	.catch(err =>
+		console.log(`Could not connect to database server`, err)
+	);
 
-app.post('/welcome', auth, (req, res) => {
-	res.status(200).send('Welcome 🙌 ');
-});
+app.use(bodyParser.json());
+app.use(cors());
+
+app.use('/images', express.static(path.join('images')));
+
 app.use('/api/users', auth, userRoute);
 app.use('/api/auth', authRoute);
-
-app.get('/', function (req, res) {
-	res.send('Hello World');
-});
-
-app.listen(3000);

@@ -1,8 +1,8 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-
 class UserController {
 	async update(req, res) {
+		console.log(req.file);
 		if (
 			req.user.userId === req.params.id ||
 			req.user.isAdmin
@@ -15,8 +15,8 @@ class UserController {
 						req.body.oldPassword,
 						user.password
 					);
-					!validPassword &&
-						res.status(400).json('wrong password');
+					if (!validPassword)
+						return res.status(400).json('wrong password');
 					const salt = await bcrypt.genSalt(10);
 					req.body.newPassword = await bcrypt.hash(
 						req.body.newPassword,
@@ -27,17 +27,23 @@ class UserController {
 				}
 			}
 			try {
+				const image =
+					'http://localhost:3000/images/' +
+					req.file.filename; // Note: set path dynamically
+				console.log('this is image', image);
 				const user = await User.findByIdAndUpdate(
 					req.params.id,
 					{
 						username: req.body.username,
 						password: req.body.newPassword,
 						email: req.body.email,
-						image: req.body.image,
+						image: image,
 					},
 					{ new: true }
 				);
-				res.status(200).json('Account has been updated');
+				return res
+					.status(200)
+					.json('Account has been updated');
 			} catch (err) {
 				return res.status(500).json(err);
 			}
@@ -78,10 +84,11 @@ class UserController {
 		}
 	}
 	async findAll(req, res) {
+		console.log('fnd all');
 		try {
 			const users = await User.find({});
-			res.status(200).json(users);
 			console.log({ users });
+			return res.status(200).json(users);
 		} catch (err) {
 			return res.status(500).json(err);
 		}
